@@ -2,11 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "server.js",
-  "scripts": {
-    "build": "npx @tailwindcss/cli -i ./public/src/input.css -o ./public/src/output.css",
-    "watch:css": "npx @tailwindcss/cli -i ./public/src/input.css -o ./public/src/.css --watch",
-    "start": "node server.js"
-  },
+ "scripts": {
+  "build": "npx tailwindcss -i ./public/src/input.css -o ./public/src/output.css",
+  "watch:css": "npx tailwindcss -i ./public/src/input.css -o ./public/src/output.css --watch",
+  "start": "node server.js"
+}
+,
   "keywords": [],
   "author": "",
   "license": "ISC",
