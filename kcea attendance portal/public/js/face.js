@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const rollNumber = new URLSearchParams(window.location.search).get("rollNumber");
 
             try {
-                const res = await fetch("http://localhost:3000/api/registerFace", {
+                const res = await fetch("https://kcea-attendance-portal.onrender.com/api/registerFace", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ rollNumber, faceDescriptor })
