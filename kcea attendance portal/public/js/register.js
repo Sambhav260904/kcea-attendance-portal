@@ -21,7 +21,7 @@ document.getElementById('userForm').addEventListener('submit', async function (e
       console.log('Roll Number:', rollnumber);
 
       try {
-        const response = await fetch('http://localhost:3000/api/checkUser', {
+        const response = await fetch('https://kcea-attendance-portal.onrender.com/api/checkUser', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
