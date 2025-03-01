@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } else {
             statusMessage.innerText = "Face detection failed. Try again.";
-            registerBtn.disabled = false;
+           
         }
     });
 
