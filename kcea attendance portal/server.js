@@ -22,7 +22,7 @@ mongoose.connect(MONGO_URI)
 
 
 // Endpoint to check if a user exists by roll number
-app.post('/api/checkUser', async (req, res) => {
+app.post('https://kcea-attendance-portal.onrender.com/api/checkUser', async (req, res) => {
   const { rollNumber } = req.body;
   if (!rollNumber) {
     return res.status(400).json({ error: "Roll number is required" });
@@ -46,7 +46,7 @@ app.post('/api/checkUser', async (req, res) => {
 
 
 // Endpoint to register a user's face
-app.post('/api/registerFace', async (req, res) => {
+app.post('https://kcea-attendance-portal.onrender.com/api/registerFace', async (req, res) => {
     const { rollNumber, faceDescriptor } = req.body;
     if (!rollNumber || !faceDescriptor) {
       return res.status(400).json({ success: false, message: "Roll number and face descriptor are required." });
@@ -71,7 +71,7 @@ app.post('/api/registerFace', async (req, res) => {
 
 
   // Endpoint to get attendance status for a given roll number (for current day)
-  app.get('/api/attendanceStatus', async (req, res) => {
+  app.get('https://kcea-attendance-portal.onrender.com/api/attendanceStatus', async (req, res) => {
     const { rollNumber } = req.query;
     if (!rollNumber) {
       return res.status(400).json({ error: "Roll number is required" });
@@ -102,7 +102,7 @@ app.post('/api/registerFace', async (req, res) => {
 
 
 // Endpoint to mark attendance (for current day)
-app.post('/api/markAttendance', async (req, res) => {
+app.post('https://kcea-attendance-portal.onrender.com/api/markAttendance', async (req, res) => {
   const { rollNumber } = req.body;
   if (!rollNumber) {
     return res.status(400).json({ success: false, message: "Roll number is required." });
@@ -135,7 +135,7 @@ app.post('/api/markAttendance', async (req, res) => {
 
 
 // Endpoint to get a student's data by roll number (including faceDescriptor)
-app.get('/api/getStudent', async (req, res) => {
+app.get('https://kcea-attendance-portal.onrender.com/api/getStudent', async (req, res) => {
   const { rollNumber } = req.query;
   if (!rollNumber) {
     return res.status(400).json({ error: "Roll number is required" });
@@ -155,7 +155,7 @@ app.get('/api/getStudent', async (req, res) => {
 
 // Endpoint to download CSV file of present students for the current day
 // Endpoint to download CSV file of present students for a given date
-app.get('/api/downloadAttendanceCSV', async (req, res) => {
+app.get('https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV', async (req, res) => {
   // Get date from query parameter; if not provided, use today's date
   const { date } = req.query;
   let queryDate = date ? new Date(date) : new Date();
@@ -193,7 +193,7 @@ app.get('/api/downloadAttendanceCSV', async (req, res) => {
 
 
 // Endpoint to download complete attendance record for a given roll number
-app.get('/api/downloadCompleteAttendanceCSV', async (req, res) => {
+app.get('https://kcea-attendance-portal.onrender.com/api/downloadCompleteAttendanceCSV', async (req, res) => {
   const { rollNumber } = req.query;
   if (!rollNumber) {
     return res.status(400).json({ error: "Roll number is required" });
