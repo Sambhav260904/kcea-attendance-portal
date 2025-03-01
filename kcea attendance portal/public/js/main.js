@@ -25,7 +25,7 @@ document.getElementById('userForm').addEventListener('submit', async function (e
   
   // Check if the roll number exists in the database by calling the /api/checkUser endpoint
   try {
-    const response = await fetch('http://localhost:3000/api/checkUser', {
+    const response = await fetch('https://kcea-attendance-portal.onrender.com/api/checkUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
