@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Check attendance status from the backend
   try {
-    const response = await fetch(`http://localhost:3000/api/attendanceStatus?rollNumber=${rollNumber}`);
+    const response = await fetch(`https://kcea-attendance-portal.onrender.com/api/attendanceStatus?rollNumber=${rollNumber}`);
     const data = await response.json();
     if (data.present) {
       statusMessage.innerText = "Attendance already marked.";
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fetch stored face descriptor for the given roll number
   try {
-    const res = await fetch(`http://localhost:3000/api/getStudent?rollNumber=${rollNumber}`);
+    const res = await fetch(`https://kcea-attendance-portal.onrender.com/api/getStudent?rollNumber=${rollNumber}`);
     const studentData = await res.json();
     if (studentData && studentData.faceDescriptor) {
       // Convert the stored array to a Float32Array for comparison
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Manual override: if the user clicks the button, mark attendance manually
   markAttendanceBtn.addEventListener("click", async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/markAttendance", {
+      const res = await fetch("https://kcea-attendance-portal.onrender.com/api/markAttendance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rollNumber })
@@ -183,6 +183,6 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
   }
   // Construct URL for complete attendance record download.
   // This endpoint should return all attendance records for the roll number.
-  const url = 'http://localhost:3000/api/downloadCompleteAttendanceCSV?rollNumber=' + encodeURIComponent(rollNumber);
+  const url = 'https://kcea-attendance-portal.onrender.com/api/downloadCompleteAttendanceCSV?rollNumber=' + encodeURIComponent(rollNumber);
   window.location.href = url;
 });
