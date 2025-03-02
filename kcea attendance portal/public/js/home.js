@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const distance = faceapi.euclideanDistance(liveDescriptor, storedDescriptor);
         console.log("Distance:", distance);
         // If the distance is below threshold, consider it a match
-        if (distance < 0.7) {
+        if (distance < 0.5) {
           statusMessage.innerText = "Face recognized. You can mark your attendance now.";
           document.getElementById("markAttendanceBtn").classList.remove("hidden");
           clearInterval(recognitionInterval); // Stop further detection
