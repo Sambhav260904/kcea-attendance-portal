@@ -97,13 +97,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Wait for video metadata to load before creating the canvas
   video.addEventListener("loadedmetadata", () => {
-    const videoSection = document.getElementById("videoSection");
-    // Append the canvas within videoSection to avoid affecting overall layout
-    canvas = faceapi.createCanvasFromMedia(video);
-    canvas.classList.add("rounded-full");
-    videoContainer.appendChild(canvas);
-    const displaySize = { width: video.videoWidth, height: video.videoHeight };
-    faceapi.matchDimensions(canvas, displaySize);
+    // const videoSection = document.getElementById("videoSection");
+    // // Append the canvas within videoSection to avoid affecting overall layout
+    // canvas = faceapi.createCanvasFromMedia(video);
+    // canvas.classList.add("rounded-full");
+    // videoContainer.appendChild(canvas);
+    // const displaySize = { width: video.videoWidth, height: video.videoHeight };
+    // faceapi.matchDimensions(canvas, displaySize);
 
     // Start continuous face detection every second
     recognitionInterval = setInterval(async () => {
