@@ -1,1 +1,0 @@
-# kcea-attendance-portal
