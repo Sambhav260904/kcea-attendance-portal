@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Registration</title>
+  <!-- Tailwind CSS CDN -->
+<!--   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../src/output.css">
+  <style>
+    /* Ensure videoContainer is positioned correctly */
+    #videoContainer {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+      /* Prevents content overflow */
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    /* Position the canvas absolutely inside the video container */
+    #videoContainer canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .typing-effect {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid blue;
+      animation: typing 3s steps(30, end) infinite, blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      0% {
+        width: 0;
+      }
+
+      50% {
+        width: 100%;
+      }
+
+      100% {
+        width: 0;
+      }
+    }
+
+    @keyframes blink-caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 flex flex-col min-h-screen">
+
+  <div class="container mx-auto p-4 flex-grow">
+    <!-- Registration Section -->
+    <div class="flex flex-col items-center justify-center">
+      <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+        <img class="w-20 h-20 mr-2" src="../images/logo.png" alt="KCEA Logo">
+        Kcea Face Registration
+      </a>
+      <!-- <h1 class="text-2xl font-bold mb-4 text-center text-blue-600">Face Registration</h1> -->
+      <!-- <p id="info" class="mb-4 text-gray-700 text-center">Loading models, please wait...</p> -->
+      <p id="info"
+        class="mb-4 text-lg font-bold text-blue-600 border-2 border-blue-600 px-4 py-2 rounded-md w-fit mx-auto">
+        Loading models, please wait...
+      </p>
+      <!-- Video Container (Ensures No Extra Space Below Footer) -->
+      <div id="videoContainer" class="flex justify-center hidden">
+        <video id="video" autoplay muted></video>
+      </div>
+
+      <div class="flex justify-center mt-4">
+        <button id="registerBtn" class="px-4 py-2 bg-blue-600 text-white rounded hidden">
+          Register Face
+        </button>
+      </div>
+
+    </div>
+
+    <!-- New Hero / Motivation Section -->
+    <section class="mt-12">
+      <div class="text-center bg-white p-8 rounded-lg shadow hover:shadow-xl transition">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Keep Smiling!</h2>
+        <p class="text-gray-700 text-lg max-w-2xl mx-auto">
+          Your face is your best asset. Register your face with ease and enjoy seamless attendance management.
+          Stay confident, and let your smile shine through!
+        </p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="mt-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-blue-600 text-center mb-8">Our Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Real-time Facial Recognition</h3>
+            <p class="text-gray-600">Instantly verify your identity with cutting-edge face detection technology.</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Attendance Management</h3>
+            <p class="text-gray-600">Easily mark and manage your daily attendance with a user-friendly interface.</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Advanced Analytics</h3>
+            <p class="text-gray-600">Gain insights into your attendance trends with interactive charts and reports.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="bg-white dark:bg-gray-900 mb-1">
+    <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+      <figure class="max-w-screen-md mx-auto">
+        <svg class="h-12 mx-auto mb-3 text-blue-400 dark:text-blue-600" viewBox="0 0 24 27" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+            fill="currentColor" />
+        </svg>
+        <blockquote>
+          <p class="text-2xl font-medium text-gray-900 dark:text-white">"Kcea Attendance Portal is just awesome. It contains of
+            features and pages starting from login screen to complex dashboard. Perfect choice for your
+            smart attendance site."</p>
+        </blockquote>
+        <figcaption class="flex items-center justify-center mt-6 space-x-3">
+          <img class="w-6 h-6 rounded-full"
+            src="../images/user.jpg"
+            alt="profile picture">
+          <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+            <div class="pr-3 font-medium text-gray-900 dark:text-white">Sambhav Rawani</div>
+            <div class="pl-3 text-sm font-medium text-gray-500 dark:text-gray-400">22B41A05A3</div>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <div class="mt-14">
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-lg fixed w-full bottom-0 ">
+      <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center">
+        <p class="text-gray-600 text-sm">&copy; 2025 Sambhav_Rawani. All rights reserved.</p>
+        <div class="flex gap-4 mt-2 sm:mt-0">
+          <a href="https://github.com/Sambhav260904" target="_blank" class="text-gray-600 hover:text-gray-900">
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/Sambhav-Rawani" target="_blank"
+            class="text-gray-600 hover:text-gray-900">
+            <i class="fab fa-linkedin text-xl"></i>
+          </a>
+          <a href="https://instagram.com/sambhav_rawani" target="_blank" class="text-gray-600 hover:text-gray-900">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Load face-api.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="../js/face.js"></script>
+</body>
+
+</html>

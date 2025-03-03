@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kcea Attendance Dashboard</title>
+  <!-- Tailwind CSS CDN -->
+<!--   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../src/output.css">
+  <!-- face-api.js CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <style>
+    /* Custom styles */
+    #attendanceChart {
+      max-width: 300px;
+      max-height: 300px;
+    }
+
+    #video {
+      object-fit: cover;
+    }
+
+    /* Video section: ensure a fixed min-height and position relative */
+    #videoSection {
+      position: relative;
+      min-height: 400px;
+      /* Adjust to desired height */
+    }
+
+    /* Absolutely position the video container so it doesn't add extra space */
+    #videoContainer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      /* Fixed width/height for a circular feed */
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <!-- Left side: Logo and Desktop Nav Links -->
+        <div class="flex">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="https://www.kcea.in/"
+              class="flex items-center text-2xl font-semibold text-gray-900 dark:text-white">
+              <img class="w-14 h-14 mr-2" src="../images/logo.png" alt="KCEA Logo">
+              Attendance Portal
+            </a>
+          </div>
+          <!-- Desktop Navigation Links -->
+          <div class="hidden sm:flex sm:ml-6 sm:space-x-8">
+            <a href="#dashboard"
+              class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Dashboard
+            </a>
+            <a href="#features"
+              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Features
+            </a>
+            <a href="#stats"
+              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Stats
+            </a>
+          </div>
+        </div>
+        <!-- Right side: CSV download and Mobile Menu Button -->
+        <div class="flex items-center space-x-2">
+          <div class="hidden sm:flex items-center space-x-2">
+            <input id="csvDatePickerNav" type="date" class="border border-gray-300 rounded px-2 py-1 text-sm">
+            <button id="downloadCSVBtnNav"
+              class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold py-1 px-3 rounded">
+              Download CSV
+            </button>
+          </div>
+          <!-- Mobile menu button -->
+          
+          <div class="-mr-2 flex sm:hidden">
+            <button type="button" id="mobileMenuButton"
+              class="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition">
+              <span class="sr-only">Open main menu</span>
+              <svg id="mobileMenuIcon" class="h-6 w-6 transition-transform duration-300"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div class="sm:hidden hidden" id="mobile-menu">
+      <div class="pt-2 pb-3 space-y-1">
+        <a href="#dashboard"
+          class="bg-blue-50 border-blue-500 text-blue-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Dashboard</a>
+        <a href="#features"
+          class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Features</a>
+        <a href="#stats"
+          class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Stats</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Main content -->
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="py-12" id="dashboard">
+      <!-- <div id="statusMessage" class="flex justify-center mb-8 text-lg font-medium text-gray-700">
+        Loading status...
+      </div> -->
+      <div class="flex justify-center items-center">
+        <span id="statusMessage"
+          class="mb-4 text-lg font-bold text-blue-600 border-2 border-blue-600 px-4 py-2 rounded-md w-fit mx-auto">Loading
+          status...</span>
+      </div>
+
+     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center">
+        <!-- Video & Canvas Section -->
+        <div id="videoSection" class="w-full lg:w-1/2 flex justify-center relative hidden">
+          <!-- Add videoContainer with the video element inside -->
+          <div id="videoContainer" class="flex justify-center hidden">
+            <video id="video" width="425" height="400" autoplay muted class="rounded-full shadow "></video>
+          </div>
+        </div>
+        <!-- Attendance Summary Chart -->
+        <div class="bg-white shadow rounded-lg p-6 w-full lg:w-1/2">
+          <h2 class="text-xl font-semibold text-blue-600 mb-4 text-center">Attendance Summary</h2>
+          <canvas id="attendanceChart" class="mx-auto"></canvas>
+        </div>
+      </div>
+      <div class="flex justify-center mt-4">
+        <button id="markAttendanceBtn" class="px-4 py-2 bg-blue-600 text-white rounded hidden">
+          Mark Attendance
+        </button>
+      </div>
+    </section>
+
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+      <!-- CSV Download Section: Specific Date -->
+      <section class="w-full sm:w-1/2 py-8 bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition">
+        <div class="flex flex-col items-center">
+          <h2 class="text-2xl font-bold text-blue-600 mb-4 text-center">
+            Select Date & Download Present Students Data
+          </h2>
+          <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4 w-full max-w-md">
+            <div class="flex justify-center">
+              <input id="csvDatePicker" type="date" class="border border-gray-300 rounded px-2 py-1">
+            </div>
+            <button id="downloadCSVBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Download CSV
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CSV Download Section: Complete Attendance -->
+      <section class="w-full sm:w-1/2 py-8 bg-gray-100 p-6 rounded-lg shadow hover:shadow-xl transition">
+        <div class="flex flex-col items-center">
+          <h2 class="text-2xl font-bold text-blue-600 mb-4 text-center">
+            Enter Roll Number & Download Complete Attendance Record
+          </h2>
+          <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4 sm:space-y-0 sm:space-x-4 w-full max-w-md">
+            <div class="flex flex-col">
+              <input id="rollNumberCSV" type="text" class="border border-gray-300 rounded px-2 py-1"
+                placeholder="Enter roll number" value="22B41A05A3">
+            </div>
+            <button id="downloadCompleteCSVBtn"
+              class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Download CSV
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+
+
+
+    <!-- Features Section -->
+    <section class="py-12" id="features">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-blue-600 text-center mb-8">Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Real-time Facial Recognition</h3>
+            <p class="text-gray-600">Verify your identity instantly using advanced face detection.</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Attendance Management</h3>
+            <p class="text-gray-600">Easily mark, view, and manage your daily attendance records.</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition">
+            <h3 class="text-xl font-semibold text-blue-600 mb-2">Advanced Analytics</h3>
+            <p class="text-gray-600">Visualize trends and insights through interactive dashboards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-blue-50" id="stats">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-blue-600 text-center mb-8">Statistics</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow text-center hover:shadow-xl transition">
+            <p class="text-4xl font-bold text-blue-600">85%</p>
+            <p class="text-gray-600 mt-2">Attendance Rate</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow text-center hover:shadow-xl transition">
+            <p class="text-4xl font-bold text-blue-600">120</p>
+            <p class="text-gray-600 mt-2">Total Days</p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow text-center hover:shadow-xl transition">
+            <p class="text-4xl font-bold text-blue-600">18</p>
+            <p class="text-gray-600 mt-2">Days Absent</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white dark:bg-gray-900 mb-1">
+      <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+        <figure class="max-w-screen-md mx-auto">
+          <svg class="h-12 mx-auto mb-3 text-blue-400 dark:text-blue-600" viewBox="0 0 24 27" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+              fill="currentColor" />
+          </svg>
+          <blockquote>
+            <p class="text-2xl font-medium text-gray-900 dark:text-white">"Kcea Attendance Portal is just awesome. It
+              contains of
+              features and pages starting from login screen to complex dashboard. Perfect choice for your
+              smart attendance site."</p>
+          </blockquote>
+          <figcaption class="flex items-center justify-center mt-6 gap-3">
+            <img class="w-6 h-6 rounded-full" src="../images/user.jpg" alt="profile picture">
+            <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+              <div class="pr-3 font-medium text-gray-900 dark:text-white">Sambhav Rawani</div>
+              <div class="pl-3 text-sm font-medium text-gray-500 dark:text-gray-400">22B41A05A3</div>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-600">&copy; 2025 AttendanceApp. All rights reserved.</p>
+      <p class="text-sm">Developed by <a href="http://www.github.com/Sambhav260904" target="_blank"
+          class="text-blue-600 hover:underline">Sambhav Rawani</a></p>
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <a href="#" class="text-gray-600 hover:text-blue-600">Privacy Policy</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600">Terms of Service</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Custom JavaScript for dashboard interactivity -->
+  <script src="../js/home.js"></script>
+
+  <!-- Chart Initialization and CSV Download Scripts -->
+  <script>
+    // Attendance chart dummy data; replace with dynamic data from backend if needed.
+    const attendanceData = {
+      present: 75,
+      absent: 25
+    };
+
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Present', 'Absent'],
+        datasets: [{
+          data: [attendanceData.present, attendanceData.absent],
+          backgroundColor: ['#2563EB', '#DC2626'],
+          hoverBackgroundColor: ['#1D4ED8', '#B91C1C']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { size: 16 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const label = context.label || '';
+                const value = context.raw;
+                return label + ': ' + value + '%';
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Set default date for CSV date pickers
+    function setDefaultDate() {
+      const today = new Date().toISOString().split('T')[0];
+      const dateInputs = document.querySelectorAll('input[type="date"]');
+      dateInputs.forEach(input => input.value = today);
+    }
+    setDefaultDate();
+
+    // CSV Download handlers for navbar and main section
+    document.getElementById('downloadCSVBtnNav')?.addEventListener('click', () => {
+      const selectedDate = document.getElementById('csvDatePickerNav').value;
+      let url = 'http://localhost:3000/api/downloadAttendanceCSV';
+      if (selectedDate) {
+        url += `?date=${selectedDate}`;
+      }
+      window.location.href = url;
+    });
+
+    document.getElementById('downloadCSVBtn').addEventListener('click', () => {
+      const selectedDate = document.getElementById('csvDatePicker').value;
+      let url = 'http://localhost:3000/api/downloadAttendanceCSV';
+      if (selectedDate) {
+        url += `?date=${selectedDate}`;
+      }
+      window.location.href = url;
+    });
+  </script>
+</body>
+
+</html>

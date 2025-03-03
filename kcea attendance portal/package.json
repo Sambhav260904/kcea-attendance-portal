@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+ "scripts": {
+  "build": "npx tailwindcss -i ./public/src/input.css -o ./public/src/output.css",
+  "watch:css": "npx tailwindcss -i ./public/src/input.css -o ./public/src/output.css --watch",
+  "start": "node server.js"
+}
+,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1",
+    "tailwindcss": "^4.0.9"
+  },
+  "description": ""
+}
