@@ -187,10 +187,7 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
   window.location.href = url;
 });
 
-const downloadCsvBtn = document.getElementById("downloadCSVBtn");
-  const downloadCsvBtnNav = document.getElementById("downloadCSVBtnNav");
-
-downloadCsvBtn.addEventListener("click", function () {
+document.getElementById("downloadCSVBtn").addEventListener("click", function () {
       const dateInput = document.getElementById("csvDatePicker");
       if (dateInput) {
         const selectedDate = dateInput.value;
@@ -206,7 +203,7 @@ downloadCsvBtn.addEventListener("click", function () {
   
 
   
-    downloadCsvBtnNav.addEventListener("click", function () {
+    document.getElementById("downloadCSVBtnNav").addEventListener("click", function () {
       const dateInputNav = document.getElementById("csvDatePickerNav");
       if (dateInputNav) {
         const selectedDateNav = dateInputNav.value;
