@@ -222,6 +222,16 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
   
 });
 
-
+document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () => {
+  const rollNumber = document.getElementById('rollNumberCSV').value.trim();
+  if (!rollNumber) {
+    alert("Please enter your roll number.");
+    return;
+  }
+  // Construct URL for complete attendance record download.
+  // This endpoint should return all attendance records for the roll number.
+  const url = 'https://kcea-attendance-portal.onrender.com/api/downloadCompleteAttendanceCSV?rollNumber=' + encodeURIComponent(rollNumber);
+  window.location.href = url;
+});
 
 
