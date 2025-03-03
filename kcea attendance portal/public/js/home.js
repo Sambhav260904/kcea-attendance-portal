@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const mobileMenuButton = document.getElementById("mobileMenuButton");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileMenuIcon = document.getElementById("mobileMenuIcon");
-  const downloadCsvBtn = document.getElementById("downloadCSVBtn");
-  const downloadCsvBtnNav = document.getElementById("downloadCSVBtnNav");
   let storedDescriptor = null;
   let recognitionInterval;
   let canvas;
@@ -175,6 +173,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+});
 
 document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () => {
   const rollNumber = document.getElementById('rollNumberCSV').value.trim();
@@ -188,8 +187,10 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
   window.location.href = url;
 });
 
+const downloadCsvBtn = document.getElementById("downloadCSVBtn");
+  const downloadCsvBtnNav = document.getElementById("downloadCSVBtnNav");
 
-    downloadCsvBtn.addEventListener("click", function () {
+downloadCsvBtn.addEventListener("click", function () {
       const dateInput = document.getElementById("csvDatePicker");
       if (dateInput) {
         const selectedDate = dateInput.value;
@@ -218,20 +219,3 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
         alert("Date input field not found!");
       }
     });
-  
-  
-});
-
-document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () => {
-  const rollNumber = document.getElementById('rollNumberCSV').value.trim();
-  if (!rollNumber) {
-    alert("Please enter your roll number.");
-    return;
-  }
-  // Construct URL for complete attendance record download.
-  // This endpoint should return all attendance records for the roll number.
-  const url = 'https://kcea-attendance-portal.onrender.com/api/downloadCompleteAttendanceCSV?rollNumber=' + encodeURIComponent(rollNumber);
-  window.location.href = url;
-});
-
-
