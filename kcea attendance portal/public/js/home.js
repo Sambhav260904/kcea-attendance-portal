@@ -188,7 +188,7 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
   window.location.href = url;
 });
 
-if (downloadCsvBtn) {
+
     downloadCsvBtn.addEventListener("click", function () {
       const dateInput = document.getElementById("csvDatePicker");
       if (dateInput) {
@@ -202,9 +202,9 @@ if (downloadCsvBtn) {
         alert("Date input field not found!");
       }
     });
-  }
+  
 
-  if (downloadCsvBtnNav) {
+  
     downloadCsvBtnNav.addEventListener("click", function () {
       const dateInputNav = document.getElementById("csvDatePickerNav");
       if (dateInputNav) {
@@ -218,7 +218,7 @@ if (downloadCsvBtn) {
         alert("Date input field not found!");
       }
     });
-  }
+  
   
 });
 
