@@ -188,6 +188,7 @@ document.getElementById('downloadCompleteCSVBtn').addEventListener('click', () =
 });
 
 document.getElementById("downloadCSVBtn").addEventListener("click", function () {
+      console.log("in download section of date by csv");
       const dateInput = document.getElementById("csvDatePicker");
       if (dateInput) {
         const selectedDate = dateInput.value;
@@ -208,7 +209,7 @@ document.getElementById("downloadCSVBtn").addEventListener("click", function () 
       if (dateInputNav) {
         const selectedDateNav = dateInputNav.value;
         if (selectedDateNav) {
-          window.location.href = `https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV ? date = ${ selectedDateNav }`;
+          window.location.href = `https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV?date=${selectedDateNav}`;
         } else {
           alert("Please select a date before downloading the CSV.");
         }
