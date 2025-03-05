@@ -330,7 +330,7 @@
     // CSV Download handlers for navbar and main section
     document.getElementById('downloadCSVBtnNav')?.addEventListener('click', () => {
       const selectedDate = document.getElementById('csvDatePickerNav').value;
-      let url = 'http://localhost:3000/api/downloadAttendanceCSV';
+      let url = 'https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV';
       if (selectedDate) {
         url += `?date=${selectedDate}`;
       }
@@ -339,7 +339,7 @@
 
     document.getElementById('downloadCSVBtn').addEventListener('click', () => {
       const selectedDate = document.getElementById('csvDatePicker').value;
-      let url = 'http://localhost:3000/api/downloadAttendanceCSV';
+      let url = 'https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV';
       if (selectedDate) {
         url += `?date=${selectedDate}`;
       }
