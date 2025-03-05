@@ -192,7 +192,7 @@ document.getElementById("downloadCSVBtn").addEventListener("click", function () 
       if (dateInput) {
         const selectedDate = dateInput.value;
         if (selectedDate) {
-          window.location.href = `https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV ? date = ${selectedDate}`;
+          window.location.href = `https://kcea-attendance-portal.onrender.com/api/downloadAttendanceCSV?date=${selectedDate}`;
         } else {
           alert("Please select a date before downloading the CSV.");
         }
